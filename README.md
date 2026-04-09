@@ -236,7 +236,6 @@ To view the interactive Streamlit dashboard:
 |--------|-------|
 | Model | Logistic Regression (PySpark MLlib) |
 | Train / Test Split | 80% / 20% |
-| **AUC-ROC** | **1.000** |
 
 **Logistic Regression Coefficients:**
 
@@ -251,8 +250,6 @@ To view the interactive Streamlit dashboard:
 | `unique_items` | Negative | Broad exploration correlates with retention |
 | `category_diversity` | Near zero | Marginal individual contribution |
 
-> ⚠️ **Note on AUC = 1.000:** Perfect AUC is a result of `recency_days` being directly derived from the same timestamp used to define the churn label. In a production setting, the churn label would be computed on a future holdout window entirely separate from the training feature window to prevent this leakage.
-
 ---
 
 #### LTV Forecasting — GBT Regressor
@@ -262,9 +259,6 @@ To view the interactive Streamlit dashboard:
 | Model | Gradient Boosted Tree Regressor |
 | Train / Test Split | 80% / 20% |
 | Label Definition | Transaction count in last 60 days |
-| **RMSE** | **0.00** |
-
-**Actual vs Predicted LTV Plot:** Predictions cluster tightly around (0, 0), forming a single dense point near the origin. The diagonal reference line confirms near-perfect prediction for zero-LTV users who make up the vast majority of the dataset.
 
 > ⚠️ **Note on RMSE = 0.00:** The LTV label is extremely sparse — most users recorded zero transactions in the 60-day window. The GBT model correctly learns to predict 0 for the bulk of the population, yielding a near-zero RMSE. A revenue-weighted or percentile-based LTV label would provide a more discriminative regression target in a production deployment.
 
